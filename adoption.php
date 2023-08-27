@@ -60,7 +60,7 @@
             <div class="navbar container-fluid">
                <div class="container ">
                   <!-- logo -->
-                  <a class="nav-brand" href="index.html">
+                  <a class="nav-brand" href="index.php">
                   <img src="img/logo.png" alt="" class="img-fluid">
                   </a>
                   <!-- Navbartoggler -->
@@ -73,7 +73,7 @@
                      <ul class="navbar-nav ms-auto">
                         <!-- menu item -->
                         <li class="nav-item">
-                           <a class="nav-link" href="index.html">Home
+                           <a class="nav-link" href="index.php">Home
                            </a>
                         </li>
                         <!-- menu item -->
@@ -91,24 +91,19 @@
                         <!-- menu item -->
                         <li class="nav-item dropdown active">
                            <a class="nav-link dropdown-toggle" href="#" id="adopt-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           Adopt
+                           Adopción
                            </a>
                            <div class="dropdown-menu pattern2" aria-labelledby="adopt-dropdown">
-                              <a class="dropdown-item active" href="adoption.html">Adoption Gallery</a>
-                              <a class="dropdown-item" href="adoption-single.html">Adoption Single Page</a>
-                              <a class="dropdown-item" href="adoption-stories.html">Adoption Stories</a>
-                              <a class="dropdown-item" href="events.html">Events</a>
-                              <a class="dropdown-item" href="event-single.html">Events Single Page</a>
+                              <a class="dropdown-item active" href="AdopcionMascotas.php">Galeria Adopción</a>
                            </div>
                         </li>
                         <!-- menu item -->
                         <li class="nav-item dropdown">
-                           <a class="nav-link dropdown-toggle" href="#" id="gallery-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           Gallery
+                           <a class="nav-link dropdown-toggle" id="gallery-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           Perdidos
                            </a>
                            <div class="dropdown-menu pattern2" aria-labelledby="gallery-dropdown">
-                              <a class="dropdown-item" href="gallery.html">Gallery Style 1</a>
-                              <a class="dropdown-item" href="gallery2.html">Gallery Style 2</a>
+                              <a class="dropdown-item" href="mostrarMascotas.php">Galeria Perdidos</a>
                            </div>
                         </li>
                         <!-- menu item -->
@@ -141,7 +136,7 @@
                <!-- Breadcrumbs -->
                <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
-                     <li class="breadcrumb-item"><a href="index4.html">Home</a></li>
+                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                      <li class="breadcrumb-item active" aria-current="page">Busqueda </li>
                   </ol>
                </nav>
@@ -227,43 +222,54 @@
          </form>
          
          </div>
+     <?php
+    $archivo = fopen('datos_mascotas.csv', 'r');
+
+    $datos = [];
+    while (($linea = fgetcsv($archivo)) !== false) {
+        $datos[] = $linea;
+    }
+    fclose($archivo);
+    ?>
          <!-- centered Gallery navigation -->
          <ul class="nav nav-pills category-isotope center-nav mt-5">
             <li class="nav-item">
                <a class="nav-link active" href="#" data-bs-toggle="tab" data-filter="*">All</a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="#" data-bs-toggle="tab" data-filter=".dogs">Adopciones</a>
+               <a class="nav-link" href="#" data-bs-toggle="tab" data-filter=".adopcion">Adopciones</a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="#" data-bs-toggle="tab" data-filter=".cats">Perdidos</a>
+               <a class="nav-link" href="#" data-bs-toggle="tab" data-filter=".perdido">Perdidos</a>
             </li>
          </ul>
          <!-- /ul -->
          <!-- Gallery -->
          <div id="gallery-isotope" class="row row-eq-height mt-lg-5">
+        <?php foreach ($datos as $dato): ?>
             <!-- Adopt 1 -->
-            <div class="dogs col-lg-6">
+            <div class="<?php echo $dato[3]?> col-lg-6">
                <div class="isotope-item">
                   <div class="adopt-card res-margin row bg-light pattern2">
                      <div class="col-md-5">
                         <!-- Image -->
                         <div class="adopt-image d-flex flex-wrap align-items-center ">
                            <a href="adoption-single.html">
-                           <img src="img/adoption/adoption1.jpg" class="img-fluid" alt="">
+                            <img src="fotos/<?php echo $dato[11]; ?>" class="img-fluid" alt="Foto de la mascota perdida" style="max-width: 179px; max-height: 270px; object-fit: contain;">
                            </a>
                         </div>
                      </div>
                      <div class="col-md-7 res-margin">
                         <!-- Name -->
                         <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Magdalene</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Female</li>
-                              <li><strong>Age:</strong> 2 years</li>
-                              <li><strong>Breed:</strong> Poodle Mix</li>
-                           </ul>
+                            <h5 class="adoption-header"><a href="adoption-single.html"><?php echo $dato[0]; ?></a></h5>
+                              <ul class="list-unstyled">
+                                <li><strong>Genero: </strong><?php echo $dato[2]; ?></li>
+                                <li><strong>Raza: </strong><?php echo $dato[1]; ?></li>
+                                                      <li><strong>Color: </strong><?php echo $dato[5]; ?></li>
+                                                      <li><strong>Mensaje: </strong><?php echo $dato[10]; ?></li>
+                                                      <li><strong>Descripción: </strong><?php echo $dato[6]; ?></li>
+                              </ul>
                         </div>
                      </div>
                      <div class="col-md-12 mt-3">
@@ -285,314 +291,8 @@
                </div>
                <!-- /isotope-item--> 
             </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 2 -->
-            <div class="cats col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption2.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Leelo</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Male</li>
-                              <li><strong>Age:</strong> 7 years</li>
-                              <li><strong>Breed:</strong> Mixed</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-4"></i>Friendly to other pets</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 3 -->
-            <div class="cats col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption3.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Mimi</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Female</li>
-                              <li><strong>Age:</strong> 3 years</li>
-                              <li><strong>Breed:</strong> Mixed</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-20"></i>Children Friendly</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 4 -->
-            <div class="dogs col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption4.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Jonas</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Male</li>
-                              <li><strong>Age:</strong> 4 years</li>
-                              <li><strong>Breed:</strong> Siberian Husky</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-20"></i>Children Friendly</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 5 -->
-            <div class="dogs col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption5.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Milena</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Female</li>
-                              <li><strong>Age:</strong> 2 years</li>
-                              <li><strong>Breed:</strong> Jack Russell</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-veterinarian-hospital"></i>special needs</li>
-                              <li ><i class="flaticon-dog-20"></i>Children Friendly</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 6 -->
-            <div class="cats col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption6.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Jonsi</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Male</li>
-                              <li><strong>Age:</strong> 5 years</li>
-                              <li><strong>Breed:</strong> Mixed</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-4"></i>Friendly to other pets</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 7 -->
-            <div class="dogs col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption7.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-5 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Gordita</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Female</li>
-                              <li><strong>Age:</strong> 1.5 years</li>
-                              <li><strong>Breed:</strong> Mixed</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-4"></i>Friendly to other pets</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
-            <!-- /col-lg- --> 
-            <!-- Adopt 8 -->
-            <div class="cats col-lg-6">
-               <div class="isotope-item">
-                  <div class="adopt-card res-margin row bg-light pattern2">
-                     <div class="col-md-5">
-                        <!-- Image -->
-                        <div class="adopt-image d-flex flex-wrap align-items-center ">
-                           <a href="adoption-single.html">
-                           <img src="img/adoption/adoption8.jpg" class="img-fluid" alt="">
-                           </a>
-                        </div>
-                     </div>
-                     <div class="col-md-7 res-margin">
-                        <!-- Name -->
-                        <div class="caption-adoption">
-                           <h5 class="adoption-header"><a href="adoption-single.html">Mackie</a></h5>
-                           <!-- List -->
-                           <ul class="list-unstyled">
-                              <li><strong>Gender:</strong> Male</li>
-                              <li><strong>Age:</strong> 4 years</li>
-                              <li><strong>Breed:</strong> Mixed</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-md-12 mt-3">
-                        <!-- Button -->	
-                        <div class="text-center">
-                           <!-- Adopt info -->
-                           <ul class="adopt-card-info list-unstyled">
-                              <li ><i class="flaticon-syringe"></i>Vaccinated</li>
-                              <li ><i class="flaticon-dog-4"></i>Friendly to other pets</li>
-                           </ul>
-                           <!-- button-->
-                           <a href="adoption-single.html" class="btn btn-primary">More Info</a>
-                        </div>
-                        <!-- /text-center -->
-                     </div>
-                     <!-- /col-md -->
-                  </div>
-                  <!-- /adopt-card -->
-               </div>
-               <!-- /isotope-item--> 
-            </div>
+    <?php endforeach; ?>
+            
             <!-- /col-lg- --> 
          </div>
          <!-- /gallery-isotope-->	
